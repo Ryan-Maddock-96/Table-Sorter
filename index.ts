@@ -1,20 +1,24 @@
-/**************************************************************
-USER EDITABLE AREA
-*****************************************************************/
-// class SortableTable {
-// 		tableClass = 'testClass',
-// 		sortedHeaderAsc = '',
-//     sortedHeaderDesc = '',
-// 		sortedCellsAsc = '',
-//     sortedCellsDesc = ''
-// };
-/**************************************************************
-END
-*****************************************************************/
+const configureTable: ISortableTable  = {
+  /**************************************************************
+   USER EDITABLE AREA
+   *****************************************************************/
+  tableClasses: ["", "", ""], // Any classes you'd like every sortable table to have MUST BE an Array of strings! 
+  ascendingIconClass: "testasc", // A single class added to clicked table header for ascending sort (Can be used for Icons etc)
+  descendingIconClass: "testdesc" // A single class added to clicked table header for descending sort (Can be used for Icons etc)
+  /**************************************************************
+   END
+   *****************************************************************/ 
+}
 
 interface sortableItem {
   cellText: string,
   rowElement: HTMLTableCellElement
+}
+
+interface ISortableTable {
+  tableClasses: string[],
+  ascendingIconClass: string,
+  descendingIconClass: string,
 }
 
 const sortableTables = document.querySelectorAll('.sortable') as NodeListOf<HTMLTableElement>;
@@ -23,36 +27,47 @@ if (sortableTables.length) {
   sortableTables.forEach(table => {
     const headers = Array.from(table.querySelectorAll('thead th') as NodeListOf<HTMLTableCellElement>);
     const rows = table.querySelectorAll('tbody tr') as NodeListOf<HTMLTableCellElement>;
+
+    configureTable.tableClasses.length ? table.classList.add(...configureTable.tableClasses): false;
     
     headers.forEach((header, headerIndex) => {
       
       header.addEventListener('click', () => {
-
-        let filteredArray = [] as  Array<sortableItem>;
+        let filteredArray = [] as  Array<sortableItem>,
+            filterDirection = 'asc';
 
         rows.forEach((row, index) => {
           const cell = Array.from(row.querySelectorAll('td') as NodeListOf<HTMLTableCellElement>).filter((e, index) => index == headerIndex).pop() as HTMLTableCellElement,
               sortItem: sortableItem = {cellText: cell.innerHTML, rowElement: row};
           filteredArray.push(sortItem);
         });
-
-
+        
         if(!header.classList.contains('filtered')){
-          headers.forEach(el => el.classList.remove('filtered', 'ascending', 'descending'));
+          headers.forEach(el =>  {
+            el.classList.remove('filtered');
+            el.removeAttribute('data-sort-direction');
+          });
           header.classList.add('filtered');
         }
         
-        if(!header.classList.contains('ascending')) {
-          header.classList.remove('descending');
-          header.classList.add('ascending');
-          sortCells(filteredArray, rows, headerIndex, "asc");
+        if(header.getAttribute('data-sort-direction') != SortDirection.Ascending) {
+          filterDirection = SortDirection.Ascending;
+          header.setAttribute('data-sort-direction',SortDirection.Ascending); 
+          sortCells(filteredArray, rows, headerIndex, filterDirection);
         } else {
-          header.classList.remove('ascending');
-          header.classList.add('descending');
-          sortCells(filteredArray, rows, headerIndex, "desc");
+          filterDirection = SortDirection.Descending;
+          header.setAttribute('data-sort-direction',SortDirection.Descending);
+          sortCells(filteredArray, rows, headerIndex, filterDirection);
+        }
+         
+        if (configureTable.descendingIconClass != '' && configureTable.ascendingIconClass != '') {
+          header.classList.remove(filterDirection == SortDirection.Ascending ? configureTable.descendingIconClass : configureTable.ascendingIconClass);
+          header.classList.add(filterDirection == SortDirection.Ascending ? configureTable.ascendingIconClass : configureTable.descendingIconClass);
         }
         
+        
         const tb = table.querySelector('tbody');
+        
         if(tb){
           tb.innerHTML = "";
         
@@ -87,4 +102,10 @@ function sortCells(cellArray: Array<sortableItem>, rows: NodeListOf<HTMLTableCel
       }
       
     });
+}
+
+
+enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc'
 }
