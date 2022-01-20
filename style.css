@@ -1,17 +1,23 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: #fbfbfb;
+    padding: 15px 50px;
+}
+
 table {
     border-collapse: collapse;
     width: 800px;
 }
 
 table tbody tr:nth-child(odd) {
-    background: rgb(167, 196, 240);
+    background: rgba(167, 196, 240, 0.5);
 }
 
 th,
 td {
     text-align: center;
     padding: 10px 20px;
-    border-right: 1px solid rgb(100, 97, 231);
+    border-right: 1px solid rgba(167, 196, 240, 1);
 }
 
 th.sort-asc:after,
@@ -33,4 +39,30 @@ th:not(.no-sort):not(.sort-asc):not(.sort-desc):hover:after {
 
 th.sort-desc:after {
     content: '\f0d8';
+}
+
+ol {
+    padding: 0 15px;
+}
+
+li {
+    margin: 5px 0;
+}
+
+a {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(5, 46, 228, 0.8);
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 5px 0;
+}
+
+a:hover {
+    background: rgba(5, 46, 228, 1);
+}
+
+a i {
+    margin-right: 10px;
 }
