@@ -3,11 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
+
+    <h1>Sortable Tables</h1>
+
     <table class="sortable">
       <thead>
         <tr>
+          <th class="no-sort">Non Sortable Column</th>
+          <th>ABC</th>
           <th>ABC</th>
           <th>123</th>
           <th>Decimal</th>
@@ -15,27 +22,44 @@
       </thead>
       <tbody>
         <tr>
+          <td>Do</td>
+          <td>F</td>
           <td>F</td>
           <td>5</td>
           <td>0.9</td>
         </tr>
         <tr>
+          <td>Not</td>
           <td>C</td>
+          <td>FVC</td>
           <td>3</td>
           <td>0.6</td>
         </tr>
         <tr>
+          <td>Sort</td>
           <td>B</td>
+          <td>FA</td>
           <td>4</td>
           <td>0.4</td>
         </tr>
         <tr>
+          <td>Me</td>
           <td>A</td>
+          <td>B</td>
           <td>1</td>
           <td>1</td>
         </tr>
       </tbody>
     </table>
+
+    <h3>How to setup?</h3>
+    <ol>
+      <li>Add the typescript file to be compiled or the already complied javascript file to your project</li>
+      <li>Add the class "sortable" to a table you want to make sortable</li>
+      <li>Customise the class names within the "USER EDITABLE AREA" within the js/ts file</li>
+      <li>Add your own CSS and you're away!</li>
+    </ol>
+
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>

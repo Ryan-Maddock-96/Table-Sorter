@@ -1,0 +1,36 @@
+table {
+    border-collapse: collapse;
+    width: 800px;
+}
+
+table tbody tr:nth-child(odd) {
+    background: rgb(167, 196, 240);
+}
+
+th,
+td {
+    text-align: center;
+    padding: 10px 20px;
+    border-right: 1px solid rgb(100, 97, 231);
+}
+
+th.sort-asc:after,
+th.sort-desc:after,
+th:not(.no-sort):not(.sort-asc):not(.sort-desc):hover:after {
+    font-weight: 800;
+    position: absolute;
+    font-family: 'Font Awesome 6 Free';
+    display: inline-block;
+    font-size: 18px;
+    color: 555;
+    margin-left: 5px;
+}
+
+th.sort-asc:after,
+th:not(.no-sort):not(.sort-asc):not(.sort-desc):hover:after {
+    content: '\f0d7';
+}
+
+th.sort-desc:after {
+    content: '\f0d8';
+}
